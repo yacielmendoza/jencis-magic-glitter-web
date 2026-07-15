@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jencis Magic Glitter · Vasos snow globe hechos a mano</title>
+<meta name="description" content="Vasos snow globe personalizados, hechos a mano en Big Spring, TX. Handmade custom snow globe tumblers.">
+<link rel="icon" href="./assets/icono.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Nunito:wght@400;600;700&family=Sacramento&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rosa:#E23D9A; --morado:#7A2FF2; --dorado:#E9B84A;
+    --rosaclaro:#FCE6F1; --lila:#F4E9FC; --tinta:#2E1A40; --gris:#6b5b78; --crema:#FFFDF8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Nunito",system-ui,sans-serif;color:var(--tinta);background:var(--crema);line-height:1.6}
+  h1,h2,h3{font-family:"Poppins",sans-serif;line-height:1.2}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  .btn{display:inline-block;background:linear-gradient(135deg,var(--rosa),var(--morado));color:#fff;padding:12px 24px;border-radius:30px;font-weight:700;text-decoration:none;border:none;cursor:pointer;font-size:1rem;box-shadow:0 6px 18px rgba(226,61,154,.35);transition:transform .15s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-out{background:#fff;color:var(--rosa);border:2px solid var(--rosa);box-shadow:none}
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;background:rgba(255,253,248,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--lila)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:10px;padding-bottom:10px}
+  nav img{height:46px}
+  nav .right{display:flex;align-items:center;gap:12px}
+  .lang{background:none;border:1.5px solid var(--morado);color:var(--morado);border-radius:20px;padding:5px 12px;cursor:pointer;font-weight:700;font-size:.85rem}
+  /* HERO */
+  header.hero{background:linear-gradient(135deg,var(--rosaclaro),var(--lila));padding:56px 0 64px;text-align:center;position:relative;overflow:hidden}
+  header.hero img.logo{width:min(340px,80%);margin:0 auto 10px;display:block}
+  .hero .script{font-family:"Sacramento",cursive;font-size:2rem;color:var(--rosa);margin-bottom:6px}
+  .hero h1{font-size:clamp(1.8rem,5vw,2.8rem);background:linear-gradient(90deg,var(--rosa),var(--morado));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:10px}
+  .hero p.sub{font-size:1.1rem;color:var(--gris);max-width:560px;margin:0 auto 24px}
+  .hero .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  /* SECTIONS */
+  section{padding:56px 0}
+  section h2{font-size:clamp(1.5rem,4vw,2rem);text-align:center;margin-bottom:8px;color:var(--morado)}
+  section .lead{text-align:center;color:var(--gris);max-width:620px;margin:0 auto 34px}
+  .magic{display:grid;grid-template-columns:1fr;gap:20px}
+  @media(min-width:720px){.magic{grid-template-columns:repeat(3,1fr)}}
+  .card{background:#fff;border:1px solid var(--lila);border-radius:18px;padding:24px;text-align:center;box-shadow:0 8px 22px rgba(123,47,247,.06)}
+  .card .emoji{font-size:2rem}
+  .card h3{margin:10px 0 6px;font-size:1.1rem}
+  .card p{color:var(--gris);font-size:.95rem}
+  /* CATALOG */
+  .cat-note{text-align:center;color:var(--gris);font-size:.85rem;margin-top:18px;font-style:italic}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media(min-width:720px){.grid{grid-template-columns:repeat(3,1fr)}}
+  .prod{background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--lila);box-shadow:0 6px 16px rgba(123,47,247,.06)}
+  .prod .ph{aspect-ratio:1;background:linear-gradient(135deg,var(--rosaclaro),var(--lila));display:flex;align-items:center;justify-content:center;color:var(--morado);font-weight:700;text-align:center;padding:10px;font-size:.9rem}
+  .prod .info{padding:14px}
+  .prod .info h3{font-size:1rem;margin-bottom:4px}
+  .prod .price{color:var(--rosa);font-weight:700}
+  /* ORDER */
+  #ordenar{background:linear-gradient(135deg,var(--lila),var(--rosaclaro))}
+  .steps{display:grid;grid-template-columns:1fr;gap:16px;max-width:760px;margin:0 auto 30px}
+  @media(min-width:640px){.steps{grid-template-columns:repeat(3,1fr)}}
+  .step{background:#fff;border-radius:16px;padding:20px;text-align:center}
+  .step .n{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--rosa),var(--morado));color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+  form{background:#fff;border-radius:20px;padding:26px;max-width:560px;margin:0 auto;box-shadow:0 10px 30px rgba(123,47,247,.10)}
+  form label{display:block;font-weight:700;font-size:.9rem;margin:12px 0 4px}
+  form input,form select,form textarea{width:100%;padding:11px;border:1.5px solid var(--lila);border-radius:10px;font-size:1rem;font-family:inherit}
+  form .btn{width:100%;margin-top:18px}
+  /* FAQ */
+  details{background:#fff;border:1px solid var(--lila);border-radius:14px;padding:4px 18px;margin-bottom:10px;max-width:760px;margin-left:auto;margin-right:auto}
+  summary{font-weight:700;cursor:pointer;padding:12px 0;color:var(--morado)}
+  details p{color:var(--gris);padding-bottom:14px}
+  /* FOOTER */
+  footer{background:var(--tinta);color:#fff;text-align:center;padding:40px 0}
+  footer img{height:54px;margin-bottom:12px}
+  footer .social{display:flex;gap:18px;justify-content:center;margin:14px 0;font-weight:700}
+  footer a{color:var(--dorado);text-decoration:none}
+  footer .fine{color:#b9a9c9;font-size:.82rem;margin-top:10px}
+</style>
+</head>
+<body>
+
+<!-- ⚙️ CONFIGURA AQUÍ: pon tu número de WhatsApp (con código de país, sin +, ni espacios) y tus @usuarios -->
+<script>
+  const CONFIG = {
+    whatsapp: "14322127552",           // WhatsApp del negocio: +1 (432) 212-7552
+    instagram: "jencismagicglitter",
+    tiktok: "jencismagicglitter",
+    facebook: "jencismagicglitter"
+  };
+</script>
+
+<nav>
+  <div class="wrap">
+    <img src="./assets/logo.png" alt="Jencis Magic Glitter">
+    <div class="right">
+      <button class="lang" id="langBtn">EN</button>
+      <a class="btn" href="#ordenar" data-es="Ordenar" data-en="Order">Ordenar</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <img class="logo" src="./assets/logo.png" alt="Jencis Magic Glitter">
+    <p class="script">handmade with love</p>
+    <h1 data-es="Un poquito de magia en cada sorbo" data-en="A little magic in every sip">Un poquito de magia en cada sorbo</h1>
+    <p class="sub" data-es="Vasos snow globe personalizados, hechos a mano en Big Spring, TX. Elige tu nombre, tema y colores." data-en="Personalized snow globe tumblers, handmade in Big Spring, TX. Choose your name, theme and colors.">Vasos snow globe personalizados, hechos a mano en Big Spring, TX. Elige tu nombre, tema y colores.</p>
+    <div class="cta">
+      <a class="btn" href="#ordenar" data-es="Encarga el tuyo 💌" data-en="Order yours 💌">Encarga el tuyo 💌</a>
+      <a class="btn btn-out" href="#catalogo" data-es="Ver catálogo" data-en="See catalog">Ver catálogo</a>
+    </div>
+  </div>
+</header>
+
+<section id="magia">
+  <div class="wrap">
+    <h2 data-es="¿Qué es un vaso snow globe?" data-en="What is a snow globe tumbler?">¿Qué es un vaso snow globe?</h2>
+    <p class="lead" data-es="Un vaso de doble pared con una cámara sellada llena de glitter que flota como nieve mágica. Lo agitas y ¡brilla!" data-en="A double-wall tumbler with a sealed chamber full of glitter that floats like magic snow. Shake it and it sparkles!">Un vaso de doble pared con una cámara sellada llena de glitter que flota como nieve mágica. Lo agitas y ¡brilla!</p>
+    <div class="magic">
+      <div class="card"><div class="emoji">✨</div><h3 data-es="Personalizado" data-en="Personalized">Personalizado</h3><p data-es="Con tu nombre, tema o los colores que ames." data-en="With your name, theme or the colors you love.">Con tu nombre, tema o los colores que ames.</p></div>
+      <div class="card"><div class="emoji">🤍</div><h3 data-es="Hecho a mano" data-en="Handmade">Hecho a mano</h3><p data-es="Cada vaso lo hago con calma, cariño y probado contra fugas." data-en="Each tumbler made with care and leak-tested.">Cada vaso lo hago con calma, cariño y probado contra fugas.</p></div>
+      <div class="card"><div class="emoji">📍</div><h3 data-es="Local" data-en="Local">Local</h3><p data-es="Entrega en persona en Big Spring. Rápido y sin envío." data-en="In-person delivery in Big Spring. Fast, no shipping.">Entrega en persona en Big Spring. Rápido y sin envío.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="catalogo" style="background:linear-gradient(180deg,#fff,var(--rosaclaro))">
+  <div class="wrap">
+    <h2 data-es="Catálogo" data-en="Catalog">Catálogo</h2>
+    <p class="lead" data-es="Estos son los tamaños y precios. Cada diseño es único y original." data-en="These are the sizes and prices. Every design is unique and original.">Estos son los tamaños y precios. Cada diseño es único y original.</p>
+    <div class="grid">
+      <div class="prod"><div class="ph" data-es="📷 Tu foto aquí" data-en="📷 Your photo here">📷 Tu foto aquí</div><div class="info"><h3 data-es="16 oz · listo para llevar" data-en="16 oz · ready to go">16 oz · listo para llevar</h3><p class="price">$28</p></div></div>
+      <div class="prod"><div class="ph" data-es="📷 Tu foto aquí" data-en="📷 Your photo here">📷 Tu foto aquí</div><div class="info"><h3 data-es="16 oz · personalizado" data-en="16 oz · personalized">16 oz · personalizado</h3><p class="price">$35</p></div></div>
+      <div class="prod"><div class="ph" data-es="📷 Tu foto aquí" data-en="📷 Your photo here">📷 Tu foto aquí</div><div class="info"><h3 data-es="20 oz · personalizado" data-en="20 oz · personalized">20 oz · personalizado</h3><p class="price">$40</p></div></div>
+      <div class="prod"><div class="ph" data-es="📷 Tu foto aquí" data-en="📷 Your photo here">📷 Tu foto aquí</div><div class="info"><h3 data-es="30-40 oz · premium" data-en="30-40 oz · premium">30-40 oz · premium</h3><p class="price">$48-55</p></div></div>
+      <div class="prod"><div class="ph" data-es="📷 Tu foto aquí" data-en="📷 Your photo here">📷 Tu foto aquí</div><div class="info"><h3 data-es="Add-ons" data-en="Add-ons">Add-ons</h3><p class="price" data-es="+$3 a +$4" data-en="+$3 to +$4">+$3 a +$4</p></div></div>
+      <div class="prod"><div class="ph" data-es="📷 Tu foto aquí" data-en="📷 Your photo here">📷 Tu foto aquí</div><div class="info"><h3 data-es="Eventos (6+ vasos)" data-en="Events (6+ cups)">Eventos (6+ vasos)</h3><p class="price" data-es="-10%" data-en="-10%">-10%</p></div></div>
+    </div>
+    <p class="cat-note" data-es="Las fotos reales de cada vaso se agregan aquí. (Estos espacios son temporales.)" data-en="Real photos of each tumbler go here. (These slots are temporary.)">Las fotos reales de cada vaso se agregan aquí. (Estos espacios son temporales.)</p>
+  </div>
+</section>
+
+<section id="ordenar">
+  <div class="wrap">
+    <h2 data-es="Cómo ordenar" data-en="How to order">Cómo ordenar</h2>
+    <p class="lead" data-es="Súper fácil: llena esto y tu pedido se manda por WhatsApp. Te respondo con la cotización." data-en="Super easy: fill this out and your order goes via WhatsApp. I'll reply with a quote.">Súper fácil: llena esto y tu pedido se manda por WhatsApp. Te respondo con la cotización.</p>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><p data-es="Elige tamaño y diseño" data-en="Choose size and design">Elige tamaño y diseño</p></div>
+      <div class="step"><div class="n">2</div><p data-es="Mándame el pedido" data-en="Send me your order">Mándame el pedido</p></div>
+      <div class="step"><div class="n">3</div><p data-es="Recoge tu vaso mágico ✨" data-en="Pick up your magic tumbler ✨">Recoge tu vaso mágico ✨</p></div>
+    </div>
+    <form id="orderForm" onsubmit="return sendOrder(event)">
+      <label data-es="Tu nombre" data-en="Your name">Tu nombre</label>
+      <input id="f_name" required>
+      <label data-es="Tamaño" data-en="Size">Tamaño</label>
+      <select id="f_size">
+        <option>16 oz — $28-35</option>
+        <option>20 oz — $40</option>
+        <option>30-40 oz — $48-55</option>
+        <option data-es="No estoy segura / pregúntame" data-en="Not sure / ask me">No estoy segura / pregúntame</option>
+      </select>
+      <label data-es="Nombre o texto para el vaso" data-en="Name or text for the tumbler">Nombre o texto para el vaso</label>
+      <input id="f_text" data-es-ph="Ej. Sofía, Mamá, Class of 2026..." placeholder="Ej. Sofía, Mamá, Class of 2026...">
+      <label data-es="Colores / tema que te gustan" data-en="Colors / theme you like">Colores / tema que te gustan</label>
+      <input id="f_theme" data-es-ph="Ej. rosa y morado, mariposas, western..." placeholder="Ej. rosa y morado, mariposas, western...">
+      <label data-es="¿Algo más?" data-en="Anything else?">¿Algo más?</label>
+      <textarea id="f_notes" rows="2"></textarea>
+      <button class="btn" type="submit" data-es="Enviar pedido por WhatsApp 💬" data-en="Send order via WhatsApp 💬">Enviar pedido por WhatsApp 💬</button>
+    </form>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <h2 data-es="Preguntas frecuentes" data-en="FAQ">Preguntas frecuentes</h2>
+    <details><summary data-es="¿Cuánto tarda mi vaso?" data-en="How long does my tumbler take?">¿Cuánto tarda mi vaso?</summary><p data-es="Los personalizados tardan unos días (se sella y se prueba contra fugas). Te confirmo la fecha al ordenar." data-en="Custom ones take a few days (sealed and leak-tested). I confirm the date when you order.">Los personalizados tardan unos días (se sella y se prueba contra fugas). Te confirmo la fecha al ordenar.</p></details>
+    <details><summary data-es="¿Cómo lo cuido?" data-en="How do I care for it?">¿Cómo lo cuido?</summary><p data-es="Lavar solo a mano, agua tibia. No microondas, no lavavajillas, no congelar. Solo bebidas frías." data-en="Hand wash only, warm water. No microwave, no dishwasher, no freezing. Cold drinks only.">Lavar solo a mano, agua tibia. No microondas, no lavavajillas, no congelar. Solo bebidas frías.</p></details>
+    <details><summary data-es="¿El glitter se toma?" data-en="Is the glitter in my drink?">¿El glitter se toma?</summary><p data-es="¡No! El glitter y el líquido van en una cámara sellada aparte. Tu bebida nunca los toca." data-en="No! The glitter and liquid are in a separate sealed chamber. Your drink never touches them.">¡No! El glitter y el líquido van en una cámara sellada aparte. Tu bebida nunca los toca.</p></details>
+    <details><summary data-es="¿Y si tiene una fuga?" data-en="What if it leaks?">¿Y si tiene una fuga?</summary><p data-es="Cada vaso se prueba antes de entregar. Aun así, si llegara a gotear, lo reparo o repongo. Garantizado." data-en="Each tumbler is tested before delivery. Still, if it ever leaks, I repair or replace it. Guaranteed.">Cada vaso se prueba antes de entregar. Aun así, si llegara a gotear, lo reparo o repongo. Garantizado.</p></details>
+    <details><summary data-es="¿Hacen envíos?" data-en="Do you ship?">¿Hacen envíos?</summary><p data-es="Por ahora entrega local en Big Spring. Escríbeme y vemos opciones." data-en="For now, local delivery in Big Spring. Message me and we'll see options.">Por ahora entrega local en Big Spring. Escríbeme y vemos opciones.</p></details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <img src="./assets/icono.png" alt="Jencis Magic Glitter">
+    <h3>Jencis Magic Glitter</h3>
+    <p data-es="Hecho a mano con amor en Big Spring, TX 💜" data-en="Handmade with love in Big Spring, TX 💜">Hecho a mano con amor en Big Spring, TX 💜</p>
+    <div class="social">
+      <a id="ln_ig" href="#" target="_blank" rel="noopener">Instagram</a>
+      <a id="ln_tt" href="#" target="_blank" rel="noopener">TikTok</a>
+      <a id="ln_fb" href="#" target="_blank" rel="noopener">Facebook</a>
+    </div>
+    <p class="fine">© 2026 Jencis Magic Glitter · <span data-es="Vasos snow globe personalizados" data-en="Personalized snow globe tumblers">Vasos snow globe personalizados</span></p>
+  </div>
+</footer>
+
+<script>
+  // Enlaces sociales desde CONFIG
+  document.getElementById('ln_ig').href = "https://instagram.com/" + CONFIG.instagram;
+  document.getElementById('ln_tt').href = "https://tiktok.com/@" + CONFIG.tiktok;
+  document.getElementById('ln_fb').href = "https://facebook.com/" + CONFIG.facebook;
+
+  // Toggle idioma ES/EN
+  let lang = "es";
+  const btn = document.getElementById('langBtn');
+  btn.addEventListener('click', function(){
+    lang = (lang === "es") ? "en" : "es";
+    btn.textContent = (lang === "es") ? "EN" : "ES";
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-es]').forEach(function(el){
+      const t = el.getAttribute('data-' + lang);
+      if(t !== null) el.textContent = t;
+    });
+    document.querySelectorAll('[data-es-ph]').forEach(function(el){
+      const t = el.getAttribute('data-' + lang + '-ph');
+      if(t !== null) el.placeholder = t;
+    });
+  });
+
+  // Enviar pedido por WhatsApp
+  function sendOrder(e){
+    e.preventDefault();
+    const name = document.getElementById('f_name').value;
+    const size = document.getElementById('f_size').value;
+    const text = document.getElementById('f_text').value;
+    const theme = document.getElementById('f_theme').value;
+    const notes = document.getElementById('f_notes').value;
+    const msg =
+      "✨ ¡Hola Jencis! Quiero pedir un vaso:\n" +
+      "• Nombre: " + name + "\n" +
+      "• Tamaño: " + size + "\n" +
+      "• Texto en el vaso: " + text + "\n" +
+      "• Colores/tema: " + theme + "\n" +
+      (notes ? "• Notas: " + notes + "\n" : "");
+    const url = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg);
+    window.open(url, "_blank");
+    return false;
+  }
+</script>
+</body>
+</html>
