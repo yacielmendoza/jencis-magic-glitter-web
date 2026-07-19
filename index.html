@@ -14,7 +14,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Jencis Magic Glitter · Vasos snow globe hechos a mano">
 <meta property="og:description" content="Un poquito de magia en cada sorbo. Vasos snow globe personalizados, hechos a mano en Big Spring, TX.">
-<meta property="og:image" content="./assets/logo.png">
+<meta property="og:image" content="./assets/icono.png">
 <meta property="og:locale" content="es_US">
 <meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
@@ -29,7 +29,7 @@
   "@context":"https://schema.org",
   "@type":"LocalBusiness",
   "name":"Jencis Magic Glitter",
-  "image":"https://jencismagicglitter.com/assets/logo.png",
+  "image":"https://jencismagicglitter.com/assets/logo.webp",
   "description":"Vasos snow globe personalizados hechos a mano.",
   "address":{"@type":"PostalAddress","addressLocality":"Big Spring","addressRegion":"TX","addressCountry":"US"},
   "areaServed":"Big Spring, TX",
@@ -115,9 +115,15 @@
   /* ============================================================
      HERO
      ============================================================ */
-  header.hero{position:relative;background:radial-gradient(1200px 600px at 50% -10%,#fff 0%,var(--rosaclaro) 45%,var(--lila) 100%);padding:46px 0 64px;text-align:center;overflow:hidden}
+  header.hero{position:relative;padding:52px 0 66px;text-align:center;overflow:hidden;
+    background-image:url('./assets/hero-mobile.webp');background-size:cover;background-position:center top;background-repeat:no-repeat}
+  @media(min-width:600px){header.hero{background-image:url('./assets/hero-tablet.webp')}}
+  @media(min-width:1000px){header.hero{background-image:url('./assets/hero-desktop.webp');background-position:center}}
+  /* Velo blanco suave: sube el contraste del texto en el centro y deja ver el glitter en los bordes */
+  header.hero::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(78% 68% at 50% 40%,rgba(255,255,255,.74),rgba(255,255,255,.34) 56%,rgba(255,255,255,0) 82%)}
   .hero .wrap{position:relative;z-index:2}
-  .hero img.logo{width:min(300px,74%);margin:0 auto 6px;filter:drop-shadow(0 14px 30px rgba(123,47,247,.22))}
+  .hero img.logo{width:min(320px,76%);height:auto;margin:0 auto 6px;filter:drop-shadow(0 12px 26px rgba(123,47,247,.30))}
   .hero .eyebrow{margin-bottom:2px}
   .hero h1{font-size:clamp(2rem,6vw,3.3rem);font-weight:800;margin:4px auto 14px;max-width:16ch;background:linear-gradient(92deg,var(--rosa),var(--morado) 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
   .hero p.sub{font-size:clamp(1.02rem,2.4vw,1.22rem);color:var(--gris);max-width:52ch;margin:0 auto 26px}
@@ -126,17 +132,6 @@
   .trustrow{display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:center;margin-top:26px;color:var(--tinta);font-weight:700;font-size:.9rem}
   .trustrow span{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.7);padding:8px 15px;border-radius:var(--radio-pill);box-shadow:var(--sombra-suave)}
   .stars{color:var(--dorado-deep);letter-spacing:1px}
-
-  /* Partículas de glitter flotando (decorativas) */
-  .sparkles{position:absolute;inset:0;z-index:1;pointer-events:none}
-  .sparkle{position:absolute;border-radius:50%;opacity:0;animation:float linear infinite}
-  @keyframes float{
-    0%{transform:translateY(20px) scale(.4);opacity:0}
-    15%{opacity:1}
-    85%{opacity:.9}
-    100%{transform:translateY(-90px) scale(1);opacity:0}
-  }
-  @media (prefers-reduced-motion:reduce){.sparkles{display:none}}
 
   /* ============================================================
      SECCIONES
@@ -294,9 +289,8 @@
 </nav>
 
 <header class="hero" id="top">
-  <div class="sparkles" id="sparkles" aria-hidden="true"></div>
   <div class="wrap">
-    <img class="logo" src="./assets/logo.png" width="300" height="300" alt="Logo de Jencis Magic Glitter: un vaso snow globe con glitter rosa y morado" fetchpriority="high">
+    <img class="logo" src="./assets/logo.webp" width="1254" height="1254" alt="Logo de Jencis Magic Glitter: un vaso snow globe con glitter rosa y morado" fetchpriority="high">
     <p class="eyebrow" data-es="hecho a mano con amor" data-en="handmade with love">hecho a mano con amor</p>
     <h1 data-es="Un poquito de magia en cada sorbo" data-en="A little magic in every sip">Un poquito de magia en cada sorbo</h1>
     <p class="sub" data-es="Vasos snow globe personalizados, hechos a mano y probados contra fugas en Big Spring, TX. Tú eliges el nombre, el tema y los colores." data-en="Personalized snow globe tumblers, handmade and leak-tested in Big Spring, TX. You choose the name, theme and colors.">Vasos snow globe personalizados, hechos a mano y probados contra fugas en Big Spring, TX. Tú eliges el nombre, el tema y los colores.</p>
@@ -603,28 +597,6 @@
     nums.forEach(function(el){ io.observe(el); });
   })();
 
-  /* ---------- Glitter flotante en el hero ---------- */
-  (function(){
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var box = document.getElementById('sparkles');
-    if(reduce || !box) return;
-    var colors = ['#E23D9A','#7A2FF2','#E9B84A','#FF3EA5','#ffffff'];
-    var N = window.innerWidth < 640 ? 16 : 30;
-    for(var i=0;i<N;i++){
-      var s = document.createElement('span');
-      s.className = 'sparkle';
-      var size = 3 + Math.random()*6;
-      s.style.width = s.style.height = size+'px';
-      s.style.left = Math.random()*100+'%';
-      s.style.bottom = (-10 - Math.random()*20)+'%';
-      s.style.background = colors[(Math.random()*colors.length)|0];
-      s.style.boxShadow = '0 0 6px currentColor';
-      s.style.color = s.style.background;
-      s.style.animationDuration = (5 + Math.random()*7)+'s';
-      s.style.animationDelay = (Math.random()*7)+'s';
-      box.appendChild(s);
-    }
-  })();
 </script>
 </body>
 </html>

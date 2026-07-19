@@ -88,6 +88,10 @@ Tamaños **fluidos** con `clamp()` → escalan solos entre móvil y desktop sin 
 ---
 
 ## 6. Responsive
+- **Hero art-directed:** el fondo de glitter cambia según el dispositivo para no recortar mal la imagen —
+  `hero-mobile.webp` (vertical, base), `hero-tablet.webp` (cuadrado, ≥600px) y `hero-desktop.webp`
+  (horizontal, ≥1000px). Un velo blanco radial (`::before`) sube el contraste del texto en el centro y deja
+  ver el glitter en los bordes. El logo es PNG→**WebP transparente** (`logo.webp`), sin caja blanca.
 - **Mobile-first:** el layout base es de 1 columna; los `@media (min-width…)` *añaden* columnas, no las quitan.
 - Nav: los enlaces centrales se ocultan <900px (el CTA y el idioma siempre visibles); en móvil manda el scroll
   y la **barra CTA fija inferior**.
@@ -102,7 +106,7 @@ Toda animación **refuerza el mensaje “magia/brillo”** o **guía la atenció
 
 | Animación | Qué hace | Por qué |
 |---|---|---|
-| Glitter flotante en hero | Partículas suben y se desvanecen | Da vida y comunica el producto en un vistazo. |
+| Fondo glitter del hero | Imagen real de glitter, art-directed por dispositivo | Comunica el producto en un vistazo, sin peso de JS. |
 | Brillo que cruza los CTA | Reflejo *shine* periódico | Atrae el ojo al botón de acción sin ser intrusivo. |
 | Reveal al hacer scroll | Secciones aparecen con *fade-up* | Enfoca una idea a la vez; sensación premium. |
 | Conteo de stats | Números suben de 0 a su valor | La *animación de progreso* aumenta el peso percibido de la prueba social. |
@@ -150,8 +154,8 @@ El sitio está diseñado para mover a la visitante de “qué bonito” a “ya 
   donde aplica y `fetchpriority=high` en el logo del hero.
 
 ### Deuda técnica recomendada (siguiente iteración)
-- **Optimizar imágenes**: `logo.png` (~1.5 MB) e `icono.png` (~3 MB) deberían exportarse a **WebP** y a
-  ~400–600px de ancho real. Es la mejora #1 de velocidad pendiente.
+- **Optimizar imágenes**: los fondos del hero y el logo ya son **WebP** (200–400 KB). Falta el favicon
+  `icono.png` (~3 MB, 2048px): conviene bajarlo a ~256–512px. Es la optimización de velocidad pendiente.
 - Sustituir los *placeholders* “📷 Foto real” por fotos reales de vasos (sube conversión fuerte).
 - Cuando haya reseñas verificables, enlazarlas a la fuente (Facebook/Google) para más credibilidad.
 
