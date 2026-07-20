@@ -68,6 +68,8 @@
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  /* El header es fijo: los anclas se detienen debajo, no ocultas tras la barra */
+  section[id]{scroll-margin-top:74px}
   body{font-family:"Nunito",system-ui,-apple-system,sans-serif;color:var(--tinta);background:var(--crema);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   h1,h2,h3,h4{font-family:"Poppins",sans-serif;line-height:1.15;letter-spacing:-.01em}
   img{max-width:100%;display:block}
@@ -95,7 +97,10 @@
   /* ============================================================
      NAV
      ============================================================ */
-  nav{position:sticky;top:0;z-index:60;background:rgba(255,253,248,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(123,47,247,.10)}
+  nav{position:fixed;top:0;left:0;right:0;z-index:60;background:transparent;border-bottom:1px solid transparent;transition:background .3s ease,border-color .3s ease,box-shadow .3s ease,backdrop-filter .3s ease}
+  /* Al bajar: aparece el fondo esmerilado + borde suave; en el top el header es 100% transparente */
+  nav.scrolled{background:rgba(255,253,248,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom-color:rgba(123,47,247,.10)}
+  @media (prefers-reduced-motion:reduce){nav{transition:none}}
   nav .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:10px;padding-bottom:10px;gap:14px}
   nav .brand{display:flex;align-items:center;gap:10px}
   nav .brand img{height:42px;width:auto;display:block}
@@ -114,7 +119,7 @@
   /* ============================================================
      HERO
      ============================================================ */
-  header.hero{position:relative;padding:52px 0 66px;text-align:center;overflow:hidden;
+  header.hero{position:relative;padding:104px 0 70px;text-align:center;overflow:hidden;
     background-image:url('./assets/hero-mobile.webp');background-size:cover;background-position:center top;background-repeat:no-repeat}
   @media(min-width:600px){header.hero{background-image:url('./assets/hero-tablet.webp')}}
   @media(min-width:1000px){header.hero{background-image:url('./assets/hero-desktop.webp');background-position:center}}
@@ -553,6 +558,14 @@
     window.open(waURL + "?text=" + encodeURIComponent(msg), "_blank");
     return false;
   }
+
+  /* ---------- Header transparente en el top, esmerilado al bajar ---------- */
+  (function(){
+    var navEl = document.querySelector('nav');
+    function update(){ navEl.classList.toggle('scrolled', window.scrollY > 10); }
+    update();
+    window.addEventListener('scroll', update, {passive:true});
+  })();
 
   /* ---------- Aparición al hacer scroll ---------- */
   (function(){
