@@ -3,12 +3,14 @@
   function initVideoCards(){
     document.querySelectorAll('.enh-video-card').forEach(function(card){
       if(card.dataset.inited) return; card.dataset.inited = '1';
-      var src = card.dataset.video; if(!src) return;
+      var srcWebm = card.dataset.video;
+      var srcMp4 = card.dataset.videoMp4 || card.dataset.videomp4;
+      if(!srcWebm && !srcMp4) return;
       var video = document.createElement('video');
       video.muted = true; video.loop = true; video.playsInline = true; video.autoplay = true;
       video.preload = 'none'; video.setAttribute('playsinline',''); video.setAttribute('aria-hidden','true');
-      var source = document.createElement('source'); source.src = src; source.type = 'video/webm';
-      video.appendChild(source);
+      if(srcWebm){ var s1 = document.createElement('source'); s1.src = srcWebm; s1.type = 'video/webm'; video.appendChild(s1); }
+      if(srcMp4){ var s2 = document.createElement('source'); s2.src = srcMp4; s2.type = 'video/mp4'; video.appendChild(s2); }
       var fallback = card.querySelector('.enh-video-fallback');
       // IntersectionObserver to lazy-load
       if('IntersectionObserver' in window){
