@@ -185,7 +185,8 @@
   @media(min-width:820px){.grid{grid-template-columns:repeat(3,1fr)}}
   .prod{background:#fff;border-radius:var(--radio-lg);overflow:hidden;border:1px solid var(--lila);box-shadow:var(--sombra-suave);transition:transform .22s ease,box-shadow .22s ease}
   .prod:hover{transform:translateY(-5px);box-shadow:var(--sombra-morada)}
-  .prod .ph{position:relative;aspect-ratio:4/3;background:linear-gradient(135deg,var(--rosaclaro),var(--lila2));display:grid;place-items:center;color:var(--morado);font-weight:700;text-align:center;padding:12px;font-size:.92rem}
+  /* Estilo de texto del placeholder; el tamaño/forma cuadrada del media lo define el bloque de arriba (.prod .ph) */
+  .prod .ph{color:var(--morado);font-weight:700;text-align:center;font-size:.92rem}
   .prod .tag{position:absolute;top:12px;left:12px;background:var(--dorado);color:#5a3d00;font-family:"Poppins";font-weight:700;font-size:.72rem;padding:5px 11px;border-radius:var(--radio-pill);box-shadow:var(--sombra-suave)}
   .prod .tag.best{background:var(--grad-marca);color:#fff}
   .prod .info{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -619,12 +620,7 @@
   })();
 
 </script>
-  <!-- Enhancements: styles and scripts for video cards, configurator, glassmorphism -->
-  <link rel="stylesheet" href="/enhancements/styles-enhancements.css">
-  <link rel="stylesheet" href="/enhancements/styles-touch.css">
+  <!-- Video cards del catálogo (autoplay silencioso, lazy-load) -->
   <script src="/enhancements/video-card.js" defer></script>
-  <script src="/enhancements/video-card.touch.js" defer></script>
-  <script src="/enhancements/configurator.js" defer></script>
-  <script src="/enhancements/configurator.touch.js" defer></script>
 </body>
 </html>

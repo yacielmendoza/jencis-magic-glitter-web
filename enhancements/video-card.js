@@ -1,52 +1,64 @@
-// Lazy-loading video card
-(function(){
-  function initVideoCards(){
-    document.querySelectorAll('.enh-video-card').forEach(function(card){
-      if(card.dataset.inited) return; card.dataset.inited = '1';
-      var srcWebm = card.dataset.video;
-      var srcMp4 = card.dataset.videoMp4 || card.dataset.videomp4;
-      if(!srcWebm && !srcMp4) return;
-      // if a video already exists (added by other script), reuse it instead of creating another
-      var existing = card.querySelector('video');
-      if(existing){
-        try{ existing.muted = true; existing.loop = true; existing.playsInline = true; existing.setAttribute('playsinline',''); existing.setAttribute('aria-hidden','true'); }catch(e){}
-        var fallback = card.querySelector('.enh-video-fallback'); if(fallback) fallback.style.display='none';
-        // ensure it will play when visible
-        if('IntersectionObserver' in window){
-          var ioExisting = new IntersectionObserver(function(entries, obs){ entries.forEach(function(ent){ if(ent.isIntersecting){ existing.play().catch(()=>{}); obs.unobserve(ent.target); } }); }, {threshold:0.3}); ioExisting.observe(card);
-        } else { existing.play().catch(()=>{}); }
-        // hover handlers
-        card.addEventListener('mouseenter', function(){ existing.play().catch(()=>{}); });
-        card.addEventListener('mouseleave', function(){ existing.pause(); });
-        return;
-      }
-      var video = document.createElement('video');
-      video.muted = true; video.loop = true; video.playsInline = true; video.autoplay = true;
-      video.preload = 'none'; video.setAttribute('playsinline',''); video.setAttribute('aria-hidden','true');
-      if(srcWebm){ var s1 = document.createElement('source'); s1.src = srcWebm; s1.type = 'video/webm'; video.appendChild(s1); }
-      if(srcMp4){ var s2 = document.createElement('source'); s2.src = srcMp4; s2.type = 'video/mp4'; video.appendChild(s2); }
-      var fallback = card.querySelector('.enh-video-fallback');
-      // IntersectionObserver to lazy-load
-      if('IntersectionObserver' in window){
-        var io = new IntersectionObserver(function(entries, obs){
-          entries.forEach(function(ent){ if(ent.isIntersecting){
-            // start loading
-            try{ video.load(); }catch(e){}
-            if(fallback) fallback.style.display='none';
-            video.play().catch(()=>{});
-            card.insertBefore(video, card.firstChild);
-            obs.unobserve(ent.target);
-          }});
-        }, {threshold:0.3});
-        io.observe(card);
-      } else {
-        // fallback: immediate
-        if(fallback) fallback.style.display='none'; card.insertBefore(video, card.firstChild); try{ video.load(); video.play().catch(()=>{}); }catch(e){}
-      }
-      // hover play for desktop
-      card.addEventListener('mouseenter', function(){ video.play().catch(()=>{}); });
-      card.addEventListener('mouseleave', function(){ video.pause(); });
-    });
+// Video cards for the catalog: lazy-loaded, muted autoplay on view, graceful fallback.
+// One script, no fake autoplay probing. Muted inline video autoplays on modern
+// desktop and mobile; if a browser blocks it, the "Cargando…" fallback simply stays.
+(function () {
+  function initCard(card) {
+    if (card.dataset.inited) return;
+    card.dataset.inited = '1';
+
+    var webm = card.dataset.video;
+    var mp4 = card.dataset.videoMp4 || card.dataset.videomp4;
+    if (!webm && !mp4) return;
+
+    var fallback = card.querySelector('.enh-video-fallback');
+    var video = document.createElement('video');
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.setAttribute('playsinline', '');
+    video.setAttribute('muted', '');
+    video.setAttribute('aria-hidden', 'true');
+    video.preload = 'none';
+    if (card.dataset.poster) video.poster = card.dataset.poster;
+    if (webm) { var s1 = document.createElement('source'); s1.src = webm; s1.type = 'video/webm'; video.appendChild(s1); }
+    if (mp4) { var s2 = document.createElement('source'); s2.src = mp4; s2.type = 'video/mp4'; video.appendChild(s2); }
+    card.insertBefore(video, card.firstChild);
+
+    function hideFallback() { if (fallback) fallback.style.display = 'none'; }
+    video.addEventListener('loadeddata', hideFallback);
+    video.addEventListener('playing', hideFallback);
+
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var loaded = false;
+    function load() { if (loaded) return; loaded = true; video.preload = 'auto'; video.load(); }
+
+    // Respect reduced motion: load the first frame but don't autoplay.
+    if (reduce) { load(); return; }
+
+    function play() {
+      load();
+      var p = video.play();
+      if (p && p.catch) p.catch(function () { /* autoplay blocked: keep fallback visible, no fake button */ });
+    }
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) play();
+          else if (!video.paused) video.pause();
+        });
+      }, { threshold: 0.25 });
+      io.observe(card);
+    } else {
+      play();
+    }
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', initVideoCards); else initVideoCards();
+
+  function init() {
+    var cards = document.querySelectorAll('.enh-video-card');
+    for (var i = 0; i < cards.length; i++) initCard(cards[i]);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();
