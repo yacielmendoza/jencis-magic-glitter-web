@@ -307,10 +307,24 @@
 </nav>
 
 <header class="hero" id="top">
-    <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-      <source src="/assets/videos/demo-loop.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+    <video class="hero-video" muted loop playsinline preload="none" aria-hidden="true"></video>
+    <script>
+      /* Hero video responsivo: vertical en móvil (<600px), horizontal en pantallas mayores.
+         Se elige una sola fuente (no descarga las dos) y respeta prefers-reduced-motion. */
+      (function () {
+        var v = document.querySelector('.hero-video');
+        if (!v) return;
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; // deja el fondo webp
+        var mobile = window.matchMedia && window.matchMedia('(max-width: 599px)').matches;
+        var s = document.createElement('source');
+        s.src = mobile ? '/assets/videos/hero-mobile.mp4' : '/assets/videos/hero.mp4';
+        s.type = 'video/mp4';
+        v.appendChild(s);
+        v.load();
+        var p = v.play();
+        if (p && p.catch) p.catch(function () { /* si el autoplay se bloquea, queda el fondo webp */ });
+      })();
+    </script>
   <div class="wrap">
     <img class="logo" src="./assets/logo.webp" width="1254" height="1254" alt="Logo de Jencis Magic Glitter: un vaso snow globe con glitter rosa y morado" fetchpriority="high">
     <p class="eyebrow" data-es="hecho a mano con amor" data-en="handmade with love">hecho a mano con amor</p>
