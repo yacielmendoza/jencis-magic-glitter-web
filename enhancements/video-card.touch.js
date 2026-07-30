@@ -7,10 +7,9 @@
     btn.appendChild(inner); return btn;
   }
   function supportsAutoplay(){
-    // quick feature detect: try muted autoplay with small blob
     return new Promise(function(resolve){
       var v = document.createElement('video'); v.muted = true; v.playsInline = true; v.setAttribute('playsinline',''); v.autoplay = true; v.preload='none';
-      v.src = "data:video/mp4;base64,AAAA"; // invalid but quick
+      v.src = "data:video/mp4;base64,AAAA";
       var p = v.play(); if(p && p.then) p.then(function(){ resolve(true) }).catch(function(){ resolve(false) });
       setTimeout(function(){ resolve(false) }, 250);
     });
@@ -21,34 +20,42 @@
       var videoSrc = card.dataset.video || null; var videoMp4 = card.dataset.videoMp4 || null; var poster = card.dataset.poster || null;
       var overlay = mkPlayButton(); overlay.style.display='none';
       card.appendChild(overlay);
-      var video = document.createElement('video'); video.playsInline = true; video.setAttribute('playsinline',''); video.muted = true; video.loop = true; video.preload='metadata'; video.setAttribute('aria-hidden','true');
 
-      if(poster) video.poster = poster;
-      // add sources if provided
-      if(videoSrc){ var s = document.createElement('source'); s.src = videoSrc; s.type = 'video/webm'; video.appendChild(s); }
-      if(videoMp4){ var s2 = document.createElement('source'); s2.src = videoMp4; s2.type = 'video/mp4'; video.appendChild(s2); }
+      // Reuse any existing video inserted by the lazy loader, otherwise create one
+      var existing = card.querySelector('video');
+      var video;
+      if(existing){
+        video = existing;
+        // ensure attributes for consistent behaviour
+        try{ video.muted = true; video.loop = true; video.playsInline = true; video.setAttribute('playsinline',''); video.setAttribute('aria-hidden','true'); }catch(e){}
+      } else {
+        video = document.createElement('video'); video.playsInline = true; video.setAttribute('playsinline',''); video.muted = true; video.loop = true; video.preload='metadata'; video.setAttribute('aria-hidden','true');
+        if(poster) video.poster = poster;
+        if(videoSrc){ var s = document.createElement('source'); s.src = videoSrc; s.type = 'video/webm'; video.appendChild(s); }
+        if(videoMp4){ var s2 = document.createElement('source'); s2.src = videoMp4; s2.type = 'video/mp4'; video.appendChild(s2); }
+      }
 
       function attachAndPlay(){ if(!card.contains(video)) card.insertBefore(video, card.firstChild); if(video.paused) video.play().catch(function(){ overlay.style.display='flex'; }); }
       function attachOnly(){ if(!card.contains(video)) card.insertBefore(video, card.firstChild); }
 
-      // lazy load via IO
-      if('IntersectionObserver' in window){
-        var io = new IntersectionObserver(function(entries, obs){
-          entries.forEach(function(ent){ if(ent.isIntersecting){ attachOnly(); obs.unobserve(ent.target); } });
-        }, {threshold:0.25}); io.observe(card);
-      } else attachOnly();
+      // lazy load only if no existing video present
+      if(!existing){
+        if('IntersectionObserver' in window){
+          var io = new IntersectionObserver(function(entries, obs){
+            entries.forEach(function(ent){ if(ent.isIntersecting){ attachOnly(); obs.unobserve(ent.target); } });
+          }, {threshold:0.25}); io.observe(card);
+        } else attachOnly();
+      }
 
       // detect autoplay support
       supportsAutoplay().then(function(ok){
-        if(ok){ // try autoplay when visible
-          // play on hover for desktop
+        if(ok){
           card.addEventListener('mouseenter', function(){ attachAndPlay(); });
           card.addEventListener('mouseleave', function(){ if(!card.classList.contains('locked')) video.pause(); });
-          // for touch devices show overlay; tap toggles play
           overlay.addEventListener('click', function(ev){ ev.stopPropagation(); if(video.paused){ attachAndPlay(); overlay.style.display='none'; } else { video.pause(); overlay.style.display='flex'; } });
           card.addEventListener('touchstart', function(ev){ if(video.paused){ attachAndPlay(); overlay.style.display='none'; } else { video.pause(); overlay.style.display='flex'; } });
         } else {
-          // if autoplay not allowed, keep overlay visible and let tap play
+          // if autoplay not allowed, show overlay so user can tap to play
           overlay.style.display='flex';
           overlay.addEventListener('click', function(ev){ ev.stopPropagation(); attachAndPlay(); overlay.style.display='none'; });
           card.addEventListener('touchstart', function(ev){ attachAndPlay(); overlay.style.display='none'; });

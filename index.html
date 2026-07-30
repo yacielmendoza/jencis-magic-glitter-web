@@ -122,6 +122,22 @@
   header.hero::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
     background:radial-gradient(78% 68% at 50% 40%,rgba(255,255,255,.74),rgba(255,255,255,.34) 56%,rgba(255,255,255,0) 82%)}
   .hero .wrap{position:relative;z-index:2}
+  .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.98;pointer-events:none}
+  @media (prefers-reduced-motion:reduce){.hero-video{display:none}}
+  /* make product media perfectly square and cover the card */
+  .prod{display:flex;flex-direction:column}
+  .prod .ph{position:relative;aspect-ratio:1/1;padding:0;overflow:hidden;border-radius:var(--radio-lg);background:linear-gradient(135deg,var(--rosaclaro),var(--lila2));flex:0 0 auto}
+  .enh-video-card{width:100%;height:100%;display:block;border-radius:inherit;overflow:hidden}
+  .enh-video-card video{width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:inherit;display:block}
+  /* position small helper text and tag inside the ph area without affecting layout */
+  .prod .ph .enh-video-fallback{position:absolute;left:12px;bottom:10px;background:rgba(255,255,255,.95);padding:6px 10px;border-radius:10px;color:var(--morado);font-weight:700;font-size:.82rem;box-shadow:0 6px 18px rgba(16,8,40,.06)}
+  .prod .ph .tag{position:absolute;top:10px;left:10px;z-index:4;padding:6px 10px;font-size:.72rem;border-radius:10px;background:linear-gradient(90deg,#ffd873,#ffb3e6);color:#3b2250;box-shadow:0 6px 18px rgba(16,8,40,.06)}
+  /* tighten spacing of product info so it sits cleanly under the media */
+  .prod .info{padding:12px 14px}
+  .prod .price{margin-left:8px}
+  /* overlay/button UI for touch will be handled by JS; hide by default but JS may show if needed */
+  .enh-video-play-overlay{display:none}
+  .enh-video-play-btn{display:none}
   .hero img.logo{width:min(320px,76%);height:auto;margin:0 auto 6px;filter:drop-shadow(0 12px 26px rgba(123,47,247,.30))}
   .hero .eyebrow{margin-bottom:2px}
   .hero h1{font-size:clamp(2rem,6vw,3.3rem);font-weight:800;margin:4px auto 14px;max-width:16ch;background:linear-gradient(92deg,var(--rosa),var(--morado) 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -256,49 +272,7 @@
 </head>
 <body>
 
-  <!-- Example product card with video support -->
-  <section class="wrap" style="padding:2rem 0;">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="reveal">Catálogo (Demo con video)</h2>
-      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem;">
-        <div class="enh-video-card" data-video-mp4="/assets/videos/demo-loop.mp4">
-          <div class="enh-video-fallback">Cargando vista previa…</div>
-        </div>
-        <div class="enh-video-card" data-video-mp4="/assets/videos/demo-loop-2.mp4">
-          <div class="enh-video-fallback">Cargando vista previa…</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Simple configurator demo -->
-  <section class="enh-configurator">
-    <div class="preview">
-      <div style="width:320px;height:440px;padding:12px;">
-        <svg class="enh-preview-svg" width="100%" height="100%" viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
-              <stop offset="0" stop-color="#ffd1dc"/>
-              <stop offset="1" stop-color="#caa6ff"/>
-            </linearGradient>
-          </defs>
-          <rect x="0" y="0" width="200" height="280" rx="20" fill="#fff" />
-          <g transform="translate(14,20)">
-            <rect width="172" height="240" rx="16" class="glitterFill" fill="#ffd1dc" />
-            <text x="86" y="140" text-anchor="middle" font-size="20" font-family="Inter, sans-serif" fill="#111" class="vinyl">Tu Nombre</text>
-          </g>
-        </svg>
-        <canvas width="300" height="200" style="position:relative;top:-200px;opacity:0.8;border-radius:12px;"></canvas>
-      </div>
-    </div>
-    <div class="controls">
-      <label>Nombre: <input data-bind="name" type="text" value="Tu Nombre" /></label>
-      <div style="height:12px"></div>
-      <label>Glitter: <select data-bind="glitter"><option value="rose-gold">Rose Gold</option><option value="mermaid-holo">Mermaid</option><option value="galaxy-purple">Galaxy</option></select></label>
-      <div style="height:12px"></div>
-      <label>Vinyl: <select data-bind="vinyl"><option value="holo">Holo</option><option value="white">White</option><option value="black">Black</option></select></label>
-    </div>
-  </section>
 
 
 <!-- ⚙️ CONFIGURA AQUÍ: WhatsApp (código de país, sin + ni espacios) y tus @usuarios -->
@@ -332,6 +306,10 @@
 </nav>
 
 <header class="hero" id="top">
+    <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <source src="/assets/videos/demo-loop.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   <div class="wrap">
     <img class="logo" src="./assets/logo.webp" width="1254" height="1254" alt="Logo de Jencis Magic Glitter: un vaso snow globe con glitter rosa y morado" fetchpriority="high">
     <p class="eyebrow" data-es="hecho a mano con amor" data-en="handmade with love">hecho a mano con amor</p>
@@ -398,27 +376,27 @@
     </div>
     <div class="grid stagger">
       <div class="prod reveal">
-        <div class="ph"><span class="tag" data-es="Más pedido" data-en="Popular">Más pedido</span><span data-es="📷 Foto real próximamente" data-en="📷 Real photo coming soon">📷 Foto real próximamente</span></div>
+        <div class="ph"><div class="enh-video-card" data-video-mp4="/assets/videos/demo-loop-2.mp4"><div class="enh-video-fallback">Cargando vista previa…</div></div><span class="tag" data-es="Más pedido" data-en="Popular">Más pedido</span><span data-es="📷 Foto real próximamente" data-en="📷 Real photo coming soon">📷 Foto real próximamente</span></div>
         <div class="info"><div><h3 data-es="16 oz" data-en="16 oz">16 oz</h3><small data-es="listo para llevar" data-en="ready to go">listo para llevar</small></div><span class="price">$28</span></div>
       </div>
       <div class="prod reveal" style="--d:.08s">
-        <div class="ph"><span class="tag best" data-es="Favorito ⭐" data-en="Favorite ⭐">Favorito ⭐</span><span data-es="📷 Foto real próximamente" data-en="📷 Real photo coming soon">📷 Foto real próximamente</span></div>
+        <div class="ph"><div class="enh-video-card" data-video-mp4="/assets/videos/demo-loop-2.mp4"><div class="enh-video-fallback">Cargando vista previa…</div></div><span class="tag best" data-es="Favorito ⭐" data-en="Favorite ⭐">Favorito ⭐</span><span data-es="📷 Foto real próximamente" data-en="📷 Real photo coming soon">📷 Foto real próximamente</span></div>
         <div class="info"><div><h3 data-es="16 oz" data-en="16 oz">16 oz</h3><small data-es="personalizado" data-en="personalized">personalizado</small></div><span class="price">$35</span></div>
       </div>
       <div class="prod reveal" style="--d:.16s">
-        <div class="ph"><span data-es="📷 Foto real próximamente" data-en="📷 Real photo coming soon">📷 Foto real próximamente</span></div>
+        <div class="ph"><div class="enh-video-card" data-video-mp4="/assets/videos/demo-loop-2.mp4"><div class="enh-video-fallback">Cargando vista previa…</div></div><span data-es="📷 Foto real próximamente" data-en="📷 Real photo coming soon">📷 Foto real próximamente</span></div>
         <div class="info"><div><h3 data-es="20 oz" data-en="20 oz">20 oz</h3><small data-es="personalizado" data-en="personalized">personalizado</small></div><span class="price">$40</span></div>
       </div>
       <div class="prod reveal">
-        <div class="ph"><span class="tag" data-es="Premium" data-en="Premium">Premium</span><span data-es="📷 Foto real próximamente" data-en="📷 Real photo coming soon">📷 Foto real próximamente</span></div>
+        <div class="ph"><div class="enh-video-card" data-video-mp4="/assets/videos/demo-loop-2.mp4"><div class="enh-video-fallback">Cargando vista previa…</div></div><span class="tag" data-es="Premium" data-en="Premium">Premium</span><span data-es="📷 Foto real próximamente" data-en="📷 Real photo coming soon">📷 Foto real próximamente</span></div>
         <div class="info"><div><h3 data-es="30–40 oz" data-en="30–40 oz">30–40 oz</h3><small data-es="premium" data-en="premium">premium</small></div><span class="price">$48–55</span></div>
       </div>
       <div class="prod reveal" style="--d:.08s">
-        <div class="ph"><span data-es="✨ Extras" data-en="✨ Extras">✨ Extras</span></div>
+        <div class="ph"><div class="enh-video-card" data-video-mp4="/assets/videos/demo-loop-2.mp4"><div class="enh-video-fallback">Cargando vista previa…</div></div><span data-es="✨ Extras" data-en="✨ Extras">✨ Extras</span></div>
         <div class="info"><div><h3 data-es="Add-ons" data-en="Add-ons">Add-ons</h3><small data-es="charms, tapa, popote" data-en="charms, lid, straw">charms, tapa, popote</small></div><span class="price">+$3–4</span></div>
       </div>
       <div class="prod reveal" style="--d:.16s">
-        <div class="ph"><span class="tag" data-es="Eventos" data-en="Events">Eventos</span><span data-es="🎉 6 o más" data-en="🎉 6 or more">🎉 6 o más</span></div>
+        <div class="ph"><div class="enh-video-card" data-video-mp4="/assets/videos/demo-loop-2.mp4"><div class="enh-video-fallback">Cargando vista previa…</div></div><span class="tag" data-es="Eventos" data-en="Events">Eventos</span><span data-es="🎉 6 o más" data-en="🎉 6 or more">🎉 6 o más</span></div>
         <div class="info"><div><h3 data-es="Paquete evento" data-en="Event pack">Paquete evento</h3><small data-es="fiestas, quinceañeras…" data-en="parties, quinceañeras…">fiestas, quinceañeras…</small></div><span class="price">-10%</span></div>
       </div>
     </div>

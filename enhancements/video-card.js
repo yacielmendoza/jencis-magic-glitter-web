@@ -6,6 +6,20 @@
       var srcWebm = card.dataset.video;
       var srcMp4 = card.dataset.videoMp4 || card.dataset.videomp4;
       if(!srcWebm && !srcMp4) return;
+      // if a video already exists (added by other script), reuse it instead of creating another
+      var existing = card.querySelector('video');
+      if(existing){
+        try{ existing.muted = true; existing.loop = true; existing.playsInline = true; existing.setAttribute('playsinline',''); existing.setAttribute('aria-hidden','true'); }catch(e){}
+        var fallback = card.querySelector('.enh-video-fallback'); if(fallback) fallback.style.display='none';
+        // ensure it will play when visible
+        if('IntersectionObserver' in window){
+          var ioExisting = new IntersectionObserver(function(entries, obs){ entries.forEach(function(ent){ if(ent.isIntersecting){ existing.play().catch(()=>{}); obs.unobserve(ent.target); } }); }, {threshold:0.3}); ioExisting.observe(card);
+        } else { existing.play().catch(()=>{}); }
+        // hover handlers
+        card.addEventListener('mouseenter', function(){ existing.play().catch(()=>{}); });
+        card.addEventListener('mouseleave', function(){ existing.pause(); });
+        return;
+      }
       var video = document.createElement('video');
       video.muted = true; video.loop = true; video.playsInline = true; video.autoplay = true;
       video.preload = 'none'; video.setAttribute('playsinline',''); video.setAttribute('aria-hidden','true');
@@ -17,7 +31,7 @@
         var io = new IntersectionObserver(function(entries, obs){
           entries.forEach(function(ent){ if(ent.isIntersecting){
             // start loading
-            if(video.getAttribute('src')===null){ video.load(); }
+            try{ video.load(); }catch(e){}
             if(fallback) fallback.style.display='none';
             video.play().catch(()=>{});
             card.insertBefore(video, card.firstChild);
@@ -27,7 +41,7 @@
         io.observe(card);
       } else {
         // fallback: immediate
-        if(fallback) fallback.style.display='none'; card.insertBefore(video, card.firstChild); video.load(); video.play().catch(()=>{});
+        if(fallback) fallback.style.display='none'; card.insertBefore(video, card.firstChild); try{ video.load(); video.play().catch(()=>{}); }catch(e){}
       }
       // hover play for desktop
       card.addEventListener('mouseenter', function(){ video.play().catch(()=>{}); });
